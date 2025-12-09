@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ReStart Jobs – Inclusive job platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: #fff8ea;
+      --card-bg: #ffffff;
+      --primary: #253047;
+      --accent: #ffb347;
+      --accent-soft: #ffe1b2;
+      --text-soft: #555c6b;
+      --radius-lg: 24px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top left, #fff5d9, #fdfdfd);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+    .wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffb347, #ffd56b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #252525;
+    }
+    nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+    }
+    nav a:hover {
+      color: var(--primary);
+    }
+    .btn-small {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+    .hero-subtitle {
+      color: var(--text-soft);
+      margin-bottom: 20px;
+      max-width: 480px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn-primary {
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .btn-ghost {
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: 1px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* CARD LIKE THE IMAGE */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 26px 26px 26px;
+      box-shadow: 0 18px 45px rgba(16, 24, 40, 0.08);
+      border: 1px solid #f3e5c3;
+    }
+    .card-number {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+    }
+    .card ul {
+      list-style: disc;
+      margin-left: 20px;
+      color: var(--text-soft);
+      font-size: 0.96rem;
+    }
+    .card ul li + li {
+      margin-top: 6px;
+    }
+
+    /* SECTION TITLES */
+    .section-title {
+      font-size: 1.5rem;
+      margin: 40px 0 16px;
+    }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+    .step {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      border: 1px solid #f1e2c6;
+    }
+    .step-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a7873b;
+      margin-bottom: 4px;
+    }
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    /* JOB LISTING SECTION (filters + list) */
+    .jobs-header {
+      margin-top: 8px;
+      margin-bottom: 18px;
+    }
+    .jobs-subtitle {
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+    .jobs-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+      margin-bottom: 20px;
+    }
+    .filter-pill {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      background: #f3e7d1;
+      color: var(--primary);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-pill span.icon {
+      font-size: 1.1rem;
+    }
+    .filter-search {
+      background: #ffcc73;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .job-card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px 16px 16px;
+      border: 1px solid #eee1c9;
+    }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .job-title {
+      font-weight: 600;
+      font-size: 0.97rem;
+    }
+    .job-tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #ecfdf3;
+      color: #15803d;
+    }
+    .job-meta {
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .job-pill {
+      display: inline-block;
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .job-footer {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    .link-fake {
+      color: #1d4ed8;
+      text-decoration: underline;
+      cursor: default;
+    }
+
+    /* JOB DETAIL SECTION */
+    .job-detail {
+      margin-top: 32px;
+      background: white;
+      border-radius: 24px;
+      padding: 26px 26px 24px;
+      border: 1px solid #eee1c9;
+    }
+    .job-detail-header {
+      margin-bottom: 18px;
+    }
+    .job-detail-title {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+    .job-detail-meta {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .job-detail-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .btn-detail-main {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      background: #f3e2bf;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-detail-secondary {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid #d9c59c;
+      background: white;
+      color: var(--primary);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .job-detail-section {
+      margin-top: 10px;
+      margin-bottom: 14px;
+    }
+    .job-detail-section h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+    .job-detail-section p,
+    .job-detail-section ul {
+      font-size: 0.92rem;
+      color: var(--text-soft);
+    }
+    .job-detail-section ul {
+      margin-left: 18px;
+      margin-top: 4px;
+    }
+
+    /* IMPACT / TESTIMONIAL */
+    .impact {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
+      gap: 24px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .impact-stats {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: white;
+      border-radius: 16px;
+      padding: 12px 14px;
+      border: 1px solid #f0e2c6;
+      min-width: 120px;
+    }
+    .stat-number {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+    .quote {
+      background: white;
+      border-radius: 18px;
+      padding: 16px 18px;
+      border: 1px solid #eee1c9;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+    .quote strong {
+      color: var(--primary);
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid #f2e2c2;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .jobs-filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .job-detail {
+        padding: 20px 18px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <div class="logo-circle">R</div>
+        <div>
+          <strong>ReStart Jobs</strong><br />
+          <span style="font-size:0.8rem; color:var(--text-soft);">
+            Inclusive jobs for new beginnings
+          </span>
+        </div>
+      </div>
+      <nav>
+        <a href="#how-it-works">How it works</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#impact">Impact</a>
+        <button class="btn-small">Log in</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <h1 class="hero-title">
+          The job platform that opens doors for migrants and newcomers.
+        </h1>
+        <p class="hero-subtitle">
+          ReStart Jobs is a job-search platform similar to InfoJobs, designed
+          to help immigrants access formal employment, training opportunities,
+          and basic legal guidance.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">Create a simple CV</span>
+          <span class="badge">Inclusive job offers</span>
+          <span class="badge">Language & skills courses</span>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary">Get started</button>
+          <button class="btn-ghost">Preview the platform</button>
+        </div>
+      </div>
+
+      <!-- CARD LIKE THE SLIDE -->
+      <div class="card">
+        <div class="card-number">01</div>
+        <div class="card-title">ReStart Jobs</div>
+        <ul>
+          <li>
+            A job-search platform similar to InfoJobs, created to help
+            immigrants access employment and training opportunities.
+          </li>
+          <li>
+            It allows users to build simple CVs, apply for inclusive job offers,
+            and enrol in language and skills-based courses.
+          </li>
+          <li>
+            The platform also provides basic legal guidance to support
+            documentation processes and social integration.
+          </li>
+          <li>
+            Overall goal: to improve access to formal employment, reduce social
+            exclusion, and foster successful integration into the host society.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <h2 class="section-title">How does ReStart Jobs work?</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-label">Step 1</div>
+          <div class="step-title">Simple registration</div>
+          <p class="step-text">
+            Users create an account with basic information, choose their
+            language and indicate their situation (newly arrived, actively
+            looking for work, etc.).
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-label">Step 2</div>
+          <div class="step-title">Guided CV builder</div>
+          <p class="step-text">
+            A step-by-step assistant helps them build a clear CV, even if their
+            experience is informal or their qualifications come from another
+            country.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-label">Step 3</div>
+          <div class="step-title">Inclusive job offers</div>
+          <p class="step-text">
+            Partner companies committed to diversity post vacancies with simple
+            language and realistic requirements.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-label">Step 4</div>
+          <div class="step-title">Ongoing support</div>
+          <p class="step-text">
+            The platform suggests language courses, digital skills training and
+            basic legal resources to support full social and labour integration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOBS LIST + FILTERS -->
+    <section id="jobs">
+      <h2 class="section-title">Find your new job</h2>
+      <div class="jobs-header">
+        <p class="jobs-subtitle">
+          Browse inclusive job offers for migrants and newcomers.
+        </p>
+
+        <div class="jobs-filters">
+          <button class="filter-pill">
+            <span class="icon">📍</span>
+            Any location
+          </button>
+          <button class="filter-pill">
+            <span class="icon">▦</span>
+            Any sector
+          </button>
+          <button class="filter-pill filter-search">
+            Search
+          </button>
+        </div>
+      </div>
+
+      <div class="jobs-grid">
+        <article class="job-card">
+          <div class="job-header">
+            <div class="job-title">Customer Support Specialist</div>
+            <span class="job-tag">Full-time</span>
+          </div>
+          <div class="job-meta">
+            Sun Electronics · Madrid
+          </div>
+          <div class="job-pill">No advanced degree required</div>
+          <div class="job-pill">Onboarding & training</div>
+          <div class="job-footer">
+            <span>Posted: 2 days ago</span>
+            <span class="link-fake">Open details</span>
+          </div>
+        </article>
+
+        <article class="job-card">
+          <div class="job-header">
+            <div class="job-title">Restaurant Server</div>
+            <span class="job-tag">Part-time</span>
+          </div>
+          <div class="job-meta">
+            Urban Eatery · Barcelona
+          </div>
+          <div class="job-pill">Shifts compatible with studies</div>
+          <div class="job-pill">Food handling training</div>
+          <div class="job-footer">
+            <span>Posted: 5 days ago</span>
+            <span class="link-fake">Open details</span>
+          </div>
+        </article>
+
+        <article class="job-card">
+          <div class="job-header">
+            <div class="job-title">Warehouse Assistant</div>
+            <span class="job-tag">Full-time</span>
+          </div>
+          <div class="job-meta">
+            EuroParts · Valencia
+          </div>
+          <div class="job-pill">Physical work</div>
+          <div class="job-pill">Support with paperwork</div>
+          <div class="job-footer">
+            <span>Posted: 1 week ago</span>
+            <span class="link-fake">Open details</span>
+          </div>
+        </article>
+
+        <article class="job-card">
+          <div class="job-header">
+            <div class="job-title">Office Cleaner</div>
+            <span class="job-tag">Morning shifts</span>
+          </div>
+          <div class="job-meta">
+            Clean &amp; Tidy Solutions · Málaga
+          </div>
+          <div class="job-pill">Basic Spanish accepted</div>
+          <div class="job-pill">Stable schedule</div>
+          <div class="job-footer">
+            <span>Posted: 2 weeks ago</span>
+            <span class="link-fake">Open details</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- JOB DETAIL MOCKUP: CUSTOMER SUPPORT SPECIALIST -->
+      <div class="job-detail">
+        <div class="job-detail-header">
+          <h3 class="job-detail-title">Customer Support Specialist</h3>
+          <p class="job-detail-meta">
+            Sun Electronics · Madrid · Full-time · Inclusive employer
+          </p>
+          <div class="job-detail-actions">
+            <button class="btn-detail-main">Attach CV</button>
+            <button class="btn-detail-secondary">Contact employer</button>
+          </div>
+        </div>
+
+        <div class="job-detail-section">
+          <h3>Job Description</h3>
+          <p>
+            Provide front-line support to customers by phone, email and chat.
+            Help users understand products, solve basic technical issues and
+            follow up on open cases. Work closely with the technical and sales
+            teams to make sure every customer feels heard and supported.
+          </p>
+        </div>
+
+        <div class="job-detail-section">
+          <h3>Desired Profile</h3>
+          <ul>
+            <li>At least 2 years of experience in a customer support role.</li>
+            <li>Clear and patient communication skills in Spanish.</li>
+            <li>Basic English is a plus, but not mandatory.</li>
+            <li>Empathy, active listening and problem-solving attitude.</li>
+            <li>Open to continuous training and feedback.</li>
+          </ul>
+        </div>
+
+        <div class="job-detail-section">
+          <h3>How We Support Migrants</h3>
+          <p>
+            Sun Electronics partners with ReStart Jobs to make the hiring
+            process easier for migrants and newcomers. We offer:
+          </p>
+          <ul>
+            <li>Help understanding the contract and basic labour rights.</li>
+            <li>Support with documentation needed for hiring.</li>
+            <li>Access to language classes during the first year.</li>
+            <li>A buddy inside the company to guide you in your first months.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT -->
+    <section id="impact">
+      <h2 class="section-title">Expected social impact</h2>
+      <div class="impact">
+        <div>
+          <p style="color:var(--text-soft); margin-bottom:10px;">
+            Even though this is a school prototype, the idea behind ReStart Jobs
+            is to show a realistic solution to:
+          </p>
+          <ul style="margin-left:20px; color:var(--text-soft); font-size:0.93rem;">
+            <li>Reduce unemployment among migrants and newcomers.</li>
+            <li>Make labour rights and procedures easier to understand.</li>
+            <li>Offer personalised training paths based on each profile.</li>
+            <li>Connect inclusive companies with diverse talent.</li>
+          </ul>
+          <div class="impact-stats" style="margin-top:16px;">
+            <div class="stat">
+              <div class="stat-number">+500</div>
+              <div class="stat-label">
+                CVs created in the first year (goal)
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">60%</div>
+              <div class="stat-label">
+                Users getting at least one interview
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">40</div>
+              <div class="stat-label">Partner companies</div>
+            </div>
+          </div>
+        </div>
+        <div class="quote">
+          “I arrived in the country without contacts and my experience was not
+          recognised. Through <strong>ReStart Jobs</strong> I could translate my
+          skills, prepare my CV, and find my first stable contract. Now I can
+          really plan my future here.”
+          <br /><br />
+          <strong>Samira · 28 years old · Fictional user</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>Prototype created for a school project – ReStart Jobs</span>
+      <span>Design by student · Not a real platform</span>
+    </footer>
+  </div>
+</body>
+</html>
